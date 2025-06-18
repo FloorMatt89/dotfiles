@@ -1,0 +1,5 @@
+theme = duckbones
+font-family = FiraCode Nerd Font Mono Reg
+font-size = 16
+gtk-titlebar = true
+background-opacity = 0.97
