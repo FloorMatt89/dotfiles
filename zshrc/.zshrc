@@ -120,9 +120,11 @@ EDITOR='nvim'
 
 # This is for keybinds papo
 source <(fzf --zsh)
+
 alias ls='eza --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions'
 alias ll='eza --color=always -l --git'
 alias cmatrix='cmatrix -ab -r'
+alias v='fd --type f --hidden --exclude .git | fzf-tmux -p --reverse | xargs nvim'
 alias inv='nvim $(fzf -m --preview="bat --color=always {}")'
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
