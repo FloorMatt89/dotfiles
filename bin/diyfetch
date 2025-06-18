@@ -1,0 +1,56 @@
+#!/bin/sh
+
+main_color=4
+
+# Title (username@hostname)
+title="$(gum style "  [1;38;5;${main_color}m${USER}@$(hostname)[0m")"
+
+# Uptime for macOS
+uptime_str=$(uptime | sed 's/.*up //' | cut -d',' -f1-2)
+
+# Info box
+body=$(gum style --border normal --border-foreground 7 --padding '0 1' --width 30 --align left \
+"    :     macOS
+    :     Finder
+    :     $(basename "${SHELL}")
+    :     Ghostty
+    :$(brew list | wc -l) packages")
+
+info=$(gum join --vertical "${title}" "${body}")
+
+# ASCII Art — same height as info box
+art=$(gum style '    [34m___[0m
+   [34m([0m.. [34m|[0m
+   [34m([33m<> [34m|[0m
+  [34m/ [0m__  [34m\[0m
+ [34m( [0m/  \[34m/ |[0m
+[33m_[34m/\ [0m__)[34m/[33m_[34m)[0m
+[33m\/[34m-____[33m\/[0m')
+
+# Color strip at the bottom
+color=$(gum style '[0;30m⬤[0;31m⬤[0;32m⬤[0;33m⬤[0;34m⬤[0;35m⬤[0;36m⬤[0;37m⬤[0m')
+
+# Terminal size
+terminal_size=$(stty size 2>/dev/null)
+
+if [ -z "$terminal_size" ]; then
+  terminal_height=32
+  terminal_width=64
+else
+  terminal_height=${terminal_size% *}
+  terminal_width=${terminal_size#* }
+fi
+
+# Horizontal layout: ASCII + Info
+combined=$(gum join --horizontal --align center "${art}" '   ' "${info}")
+
+# Final Output
+final_output=$(gum join --vertical --align center "${combined}" "${color}")
+
+# Display or fallback
+if [ -z "$final_output" ]; then
+  echo "diyfetch: unable to render layout. Try resizing your terminal."
+else
+  gum style --align left --width="${terminal_width}" "${final_output}"
+fi
+
