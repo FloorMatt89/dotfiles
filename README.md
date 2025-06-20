@@ -18,7 +18,7 @@ Welcome to my personal dotfiles! If you are here for inspiration for how my term
 ### 2. Clone This Repo
 
 ```sh
-git clone https://github.com/yourusername/dotfiles ~/.dotfiles
+git clone https://github.com/FloorMatt89/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 ```
 
